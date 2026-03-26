@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io'; // 💡 [윈도우 수정] 플랫폼(Windows, Android 등) 구분을 위해 추가
+import 'dart:typed_data';
 
 
 
@@ -278,7 +279,7 @@ class BleService {
   /// 특성에 데이터 쓰기
   Future<void> writeCharacteristic(
     BluetoothCharacteristic characteristic,
-    List<int> data,
+    Uint8List data,
   ) async {
     try {
       await characteristic.write(data);

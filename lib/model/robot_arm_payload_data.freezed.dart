@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$RobotArmPayloadData {
 
- int get commandId; int get runMode; int get runSpeed; int get turnAngle;
+ RobotArmCommandId get commandId; RobotArmRunMode get runMode; int get runSpeed; int get turnAngle;
 /// Create a copy of RobotArmPayloadData
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -45,7 +45,7 @@ abstract mixin class $RobotArmPayloadDataCopyWith<$Res>  {
   factory $RobotArmPayloadDataCopyWith(RobotArmPayloadData value, $Res Function(RobotArmPayloadData) _then) = _$RobotArmPayloadDataCopyWithImpl;
 @useResult
 $Res call({
- int commandId, int runMode, int runSpeed, int turnAngle
+ RobotArmCommandId commandId, RobotArmRunMode runMode, int runSpeed, int turnAngle
 });
 
 
@@ -65,8 +65,8 @@ class _$RobotArmPayloadDataCopyWithImpl<$Res>
 @pragma('vm:prefer-inline') @override $Res call({Object? commandId = null,Object? runMode = null,Object? runSpeed = null,Object? turnAngle = null,}) {
   return _then(_self.copyWith(
 commandId: null == commandId ? _self.commandId : commandId // ignore: cast_nullable_to_non_nullable
-as int,runMode: null == runMode ? _self.runMode : runMode // ignore: cast_nullable_to_non_nullable
-as int,runSpeed: null == runSpeed ? _self.runSpeed : runSpeed // ignore: cast_nullable_to_non_nullable
+as RobotArmCommandId,runMode: null == runMode ? _self.runMode : runMode // ignore: cast_nullable_to_non_nullable
+as RobotArmRunMode,runSpeed: null == runSpeed ? _self.runSpeed : runSpeed // ignore: cast_nullable_to_non_nullable
 as int,turnAngle: null == turnAngle ? _self.turnAngle : turnAngle // ignore: cast_nullable_to_non_nullable
 as int,
   ));
@@ -150,7 +150,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int commandId,  int runMode,  int runSpeed,  int turnAngle)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( RobotArmCommandId commandId,  RobotArmRunMode runMode,  int runSpeed,  int turnAngle)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _RobotArmPayloadData() when $default != null:
 return $default(_that.commandId,_that.runMode,_that.runSpeed,_that.turnAngle);case _:
@@ -171,7 +171,7 @@ return $default(_that.commandId,_that.runMode,_that.runSpeed,_that.turnAngle);ca
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int commandId,  int runMode,  int runSpeed,  int turnAngle)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( RobotArmCommandId commandId,  RobotArmRunMode runMode,  int runSpeed,  int turnAngle)  $default,) {final _that = this;
 switch (_that) {
 case _RobotArmPayloadData():
 return $default(_that.commandId,_that.runMode,_that.runSpeed,_that.turnAngle);}
@@ -188,7 +188,7 @@ return $default(_that.commandId,_that.runMode,_that.runSpeed,_that.turnAngle);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int commandId,  int runMode,  int runSpeed,  int turnAngle)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( RobotArmCommandId commandId,  RobotArmRunMode runMode,  int runSpeed,  int turnAngle)?  $default,) {final _that = this;
 switch (_that) {
 case _RobotArmPayloadData() when $default != null:
 return $default(_that.commandId,_that.runMode,_that.runSpeed,_that.turnAngle);case _:
@@ -206,8 +206,8 @@ class _RobotArmPayloadData extends RobotArmPayloadData {
   const _RobotArmPayloadData({required this.commandId, required this.runMode, required this.runSpeed, required this.turnAngle}): super._();
   
 
-@override final  int commandId;
-@override final  int runMode;
+@override final  RobotArmCommandId commandId;
+@override final  RobotArmRunMode runMode;
 @override final  int runSpeed;
 @override final  int turnAngle;
 
@@ -241,7 +241,7 @@ abstract mixin class _$RobotArmPayloadDataCopyWith<$Res> implements $RobotArmPay
   factory _$RobotArmPayloadDataCopyWith(_RobotArmPayloadData value, $Res Function(_RobotArmPayloadData) _then) = __$RobotArmPayloadDataCopyWithImpl;
 @override @useResult
 $Res call({
- int commandId, int runMode, int runSpeed, int turnAngle
+ RobotArmCommandId commandId, RobotArmRunMode runMode, int runSpeed, int turnAngle
 });
 
 
@@ -261,8 +261,8 @@ class __$RobotArmPayloadDataCopyWithImpl<$Res>
 @override @pragma('vm:prefer-inline') $Res call({Object? commandId = null,Object? runMode = null,Object? runSpeed = null,Object? turnAngle = null,}) {
   return _then(_RobotArmPayloadData(
 commandId: null == commandId ? _self.commandId : commandId // ignore: cast_nullable_to_non_nullable
-as int,runMode: null == runMode ? _self.runMode : runMode // ignore: cast_nullable_to_non_nullable
-as int,runSpeed: null == runSpeed ? _self.runSpeed : runSpeed // ignore: cast_nullable_to_non_nullable
+as RobotArmCommandId,runMode: null == runMode ? _self.runMode : runMode // ignore: cast_nullable_to_non_nullable
+as RobotArmRunMode,runSpeed: null == runSpeed ? _self.runSpeed : runSpeed // ignore: cast_nullable_to_non_nullable
 as int,turnAngle: null == turnAngle ? _self.turnAngle : turnAngle // ignore: cast_nullable_to_non_nullable
 as int,
   ));

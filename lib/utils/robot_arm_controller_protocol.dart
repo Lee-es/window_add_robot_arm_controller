@@ -44,8 +44,8 @@ class RobotArmControllerProtocol {
     
     packet[BluetoothConstants.indexStxFirst] = BluetoothConstants.stxFirst;
     packet[BluetoothConstants.indexStxSecond] = BluetoothConstants.stxSecond;
-    packet[BluetoothConstants.indexCmd] = payloadData.commandId;
-    packet[BluetoothConstants.indexRunMode] = payloadData.runMode;
+    packet[BluetoothConstants.indexCmd] = payloadData.commandId.code;
+    packet[BluetoothConstants.indexRunMode] = payloadData.runMode.code;
     packet[BluetoothConstants.indexRunSpeed] = payloadData.runSpeed;
 
     Uint8List angleBytes = TurnAngleConverter.angleToBytes(payloadData.turnAngle);
@@ -64,8 +64,7 @@ class RobotArmControllerProtocol {
   /// 패킷의 0번 인덱스부터 maxPacketSizeBytes - 1 인덱까지의 바이트를 XOR 연산하여 체크섬을 계산
   static int _calculateChecksum(Uint8List packet) {
     int checksum = 0x00;
-    int length = BluetoothConstants.maxPacketSizeBytes -1;
-    for (int i = 0; i < length; i++) {
+    for (int i = 0; i < BluetoothConstants.indexChecksum; i++) {
       checksum ^= packet[i];
     }
     return checksum; 

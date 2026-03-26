@@ -83,5 +83,5 @@ class BluetoothConstants {
   static const int indexTurnAngleHigh = 5; // Turn Angle High 위치
   static const int indexTurnAngleLow = 6; // Turn Angle Low 위치}
 
-  static const int indexChecksum = 7; // Checksum 위치
+  static const int indexChecksum = maxPacketSizeBytes - 1; // Checksum 위치
 }
