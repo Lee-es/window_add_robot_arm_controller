@@ -9,6 +9,7 @@ import 'dart:io'; // 💡 [윈도우 수정] 플랫폼(Windows, Android 등) 구
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart' hide FlutterBluePlus;
 import 'package:flutter_blue_plus_windows/flutter_blue_plus_windows.dart';
+import 'package:window_add_robot_arm_controller/config/bluetooth_constants.dart';
 
 
 /// BLE 연결 상태를 나타내는 열거형
@@ -169,7 +170,8 @@ class BleService {
       final bool isWindowsAutoConnect = Platform.isWindows ? false : autoConnect;
 
       await device.connect(
-        autoConnect: isWindowsAutoConnect, 
+        license: License.free,
+        autoConnect: false, 
         mtu: null,
       );
       

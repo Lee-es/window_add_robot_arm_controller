@@ -12,17 +12,11 @@ class BluetoothConstants {
   BluetoothConstants._();
 
 
+  static const String armDeviceName = 'Robot_Arm_Controller';
 
-  /// Omron 기기를 식별하기 위한 키워드 목록
-  /// HEM-7142T2, HEM-7155T 등 다양한 모델 지원
-  static const List<String> omronDeviceKeywords = [
-    'OMRON',
-    'HEM-',
-    'HEM',
-    'BLESMART',
-    'BLEsmart',
-    'BP',
-  ];
+  static const String robotArmServiceUuid = '0000abcd-0000-1000-8000-00805f9b34fb';
+  static const String robotArmCharacteristicReadUuid = '0000dcba-0000-1000-8000-00805f9b34fb';
+  static const String robotArmCharacteristicWriteUuid = '0000dcbb-0000-1000-8000-00805f9b34fb';
 
   // ========================================
   // Connection & Timing
