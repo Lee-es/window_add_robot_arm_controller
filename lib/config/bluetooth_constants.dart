@@ -43,5 +43,45 @@ class BluetoothConstants {
   /// 수동 동기화 타임아웃 (초)
   static const int manualSyncTimeoutSeconds = 10;
 
+  // 최대 패킷 크기 (바이트)
+  static const int maxPacketSizeBytes = 8;
 
+  // ========================================
+  // Flags
+  // ========================================
+  // STX
+  static const int stxFirst = 0xFF; 
+  static const int stxSecond = 0xFF; 
+
+  //CMD Flags
+  static const int cmdIdle = 0x00;
+  static const int cmdClothed = 0x01; // [의복 착의] 정지 상태에서 Torque를 해제
+  static const int cmdReset = 0x02; // [원 위치] 동작 중은 정지를 하고 Torque를 설정
+  static const int cmdEmergencyStop = 0x03; // [긴급 정지] 동작 중 일 경우 속도를 낮추고 천천히 정지를 하고 Torque는 설정
+  static const int cmdStart = 0x06; // [동작 시작] 걷기, 뛰기에 따라 설정 된 속도로 설정된 시간 동안만 동작.
+  static const int cmdTurnTable = 0x07; //[턴 테이블] 설정된 각도(-180 ~ 180)로 동작 단, 속도는 최대한 천천히 동작
+
+  
+ // Run Flags
+  static const int runIdle = 0x00; // 정지 상태
+  static const int runWalking = 0x02; // 걷기 동작으로 실행
+  static const int runRunning = 0x03; // 달리기 동작으로 실행
+
+
+  // ========================================================================
+  // 패킷 위치 상수
+  // ========================================================================
+  static const int indexStxFirst = 0; // STX 첫 번째 바이트 위치
+  static const int indexStxSecond = 1; // STX 두 번째 바이트 위치
+  
+  static const int indexCmd = 2; // CMD 위치  
+  
+  static const int indexRunMode = 3; // Run 위치
+  
+  static const int indexRunSpeed = 4; // Speed 위치
+  
+  static const int indexTurnAngleHigh = 5; // Turn Angle High 위치
+  static const int indexTurnAngleLow = 6; // Turn Angle Low 위치}
+
+  static const int indexChecksum = 7; // Checksum 위치
 }
