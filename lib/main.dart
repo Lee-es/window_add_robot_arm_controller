@@ -43,7 +43,7 @@ class DashboardScreen extends StatelessWidget {
           const SizedBox(
 
           height: 80.0, // 상단의 세로 비율 (고정 높이가 필요하다면 Container의 height로 변경 가능)
-          child: const TopSection(),
+          child: TopSection(),
         ),
         Container(
           height: 1.0, // 선의 두께
