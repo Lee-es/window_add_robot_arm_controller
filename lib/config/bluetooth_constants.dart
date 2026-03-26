@@ -14,9 +14,9 @@ class BluetoothConstants {
 
   static const String armDeviceName = 'Robot_Arm_Controller';
 
-  static const String robotArmServiceUuid = '0000abcd-0000-1000-8000-00805f9b34fb';
-  static const String robotArmCharacteristicReadUuid = '0000dcba-0000-1000-8000-00805f9b34fb';
-  static const String robotArmCharacteristicWriteUuid = '0000dcbb-0000-1000-8000-00805f9b34fb';
+  static const String robotArmServiceUuid = '9b666c50-66c1-48aa-a2b7-552eec397c02';
+  static const String robotArmCharacteristicReadUuid = '3b252962-6eac-43f7-b7d9-9293c392d72e';
+  static const String robotArmCharacteristicWriteUuid = '958df18f-668f-480d-9660-37e37f67f5b4';
 
   // ========================================
   // Connection & Timing
