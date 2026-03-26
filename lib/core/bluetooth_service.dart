@@ -23,7 +23,6 @@ class BleService {
   // ========================================
 
   BluetoothDevice? _connectedDevice;
-  StreamSubscription<List<ScanResult>>? _scanSubscription;
   StreamSubscription<BluetoothConnectionState>? _connectionStateSubscription;
 
   final StreamController<BleConnectionStatus> _connectionStatusController =
@@ -108,7 +107,6 @@ class BleService {
   Future<void> startScan({
     List<String> serviceUuids = const [],
     Duration timeout = const Duration(seconds: BluetoothConstants.scanTimeoutSeconds),
-    Function(BluetoothDevice device)? onDeviceFound,
   }) async {
     try {
       await stopScan();
@@ -116,12 +114,7 @@ class BleService {
       final filters = serviceUuids.map((uuid) => Guid(uuid)).toList();
 
       await FlutterBluePlus.startScan(withServices: filters, timeout: timeout);
-
-      _scanSubscription = FlutterBluePlus.scanResults.listen((results) {
-        for (var result in results) {
-          onDeviceFound?.call(result.device);
-        }
-      });
+  
     } catch (e) {
       debugPrint('Error starting scan: $e');
       rethrow;
@@ -131,8 +124,6 @@ class BleService {
   /// BLE 스캔 중지
   Future<void> stopScan() async {
     try {
-      await _scanSubscription?.cancel();
-      _scanSubscription = null;
 
       if (FlutterBluePlus.isScanningNow) {
         await FlutterBluePlus.stopScan();
@@ -150,7 +141,7 @@ class BleService {
   Future<void> connect(
     BluetoothDevice device, {
     required bool autoConnect,
-    bool createBond = true,
+    bool createBond = false,
   }) async {
     try {
       _connectionStateSubscription?.cancel();
@@ -333,7 +324,6 @@ class BleService {
 
   /// 리소스 정리
   void dispose() {
-    _scanSubscription?.cancel();
     _connectionStateSubscription?.cancel();
     _adapterStateSubscription?.cancel();
     

@@ -14,6 +14,8 @@ class BluetoothConstants {
 
   static const String armDeviceName = 'Robot_Arm_Controller';
 
+
+  static const String robotArmAdvertisedUuid = '95484DB8-8566-0B54-EA54-53B5EE31789E';
   static const String robotArmServiceUuid = '9b666c50-66c1-48aa-a2b7-552eec397c02';
   static const String robotArmCharacteristicReadUuid = '3b252962-6eac-43f7-b7d9-9293c392d72e';
   static const String robotArmCharacteristicWriteUuid = '958df18f-668f-480d-9660-37e37f67f5b4';
@@ -81,7 +83,7 @@ class BluetoothConstants {
   static const int indexRunSpeed = 4; // Speed 위치
   
   static const int indexTurnAngleHigh = 5; // Turn Angle High 위치
-  static const int indexTurnAngleLow = 6; // Turn Angle Low 위치}
+  static const int indexTurnAngleLow = 6; // Turn Angle Low 위치
 
   static const int indexChecksum = maxPacketSizeBytes - 1; // Checksum 위치
 }

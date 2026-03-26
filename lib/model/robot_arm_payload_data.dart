@@ -16,7 +16,7 @@ sealed class RobotArmPayloadData with _$RobotArmPayloadData {
     required int turnAngle
   }) = _RobotArmPayloadData;
 
-  factory RobotArmPayloadData.iniitial() => const RobotArmPayloadData(
+  factory RobotArmPayloadData.initial() => const RobotArmPayloadData(
     commandId: RobotArmCommandId.idle,
     runMode: RobotArmRunMode.idle,
     runSpeed: 1,
