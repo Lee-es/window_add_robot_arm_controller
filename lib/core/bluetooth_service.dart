@@ -8,7 +8,6 @@ import 'dart:typed_data';
 // 기존 모바일용 FlutterBluePlus 클래스를 숨기고(hide), 
 // 윈도우 환경을 완벽하게 지원하는 브릿지 패키지의 클래스를 대신 사용합니다.
 import 'package:fluent_ui/fluent_ui.dart';
-import 'package:flutter_blue_plus/flutter_blue_plus.dart' hide FlutterBluePlus;
 import 'package:flutter_blue_plus_windows/flutter_blue_plus_windows.dart';
 import 'package:window_add_robot_arm_controller/config/bluetooth_constants.dart';
 
@@ -23,6 +22,7 @@ class BleService {
   // ========================================
 
   BluetoothDevice? _connectedDevice;
+  StreamSubscription<List<ScanResult>>? _scanSubscription;
   StreamSubscription<BluetoothConnectionState>? _connectionStateSubscription;
 
   final StreamController<BleConnectionStatus> _connectionStatusController =
@@ -107,13 +107,32 @@ class BleService {
   Future<void> startScan({
     List<String> serviceUuids = const [],
     Duration timeout = const Duration(seconds: BluetoothConstants.scanTimeoutSeconds),
+    Function(BluetoothDevice device)? onDeviceFound,
   }) async {
     try {
+
+      await waitForAdapterOn();
+
       await stopScan();
 
       final filters = serviceUuids.map((uuid) => Guid(uuid)).toList();
 
       await FlutterBluePlus.startScan(withServices: filters, timeout: timeout);
+
+      _scanSubscription = FlutterBluePlus.scanResults.listen((results) {
+        for (var result in results) {
+          final device = result.device;
+          final deviceName = device.platformName.toUpperCase();
+          if (onDeviceFound != null) {
+            final targetDeviceName = BluetoothConstants.armDeviceName.toUpperCase();
+            if( deviceName.contains(targetDeviceName)){
+              debugPrint('Device found: $deviceName (${device.remoteId.str})');
+              onDeviceFound.call(device);
+              stopScan();
+            }
+          }
+        }
+      });
   
     } catch (e) {
       debugPrint('Error starting scan: $e');
@@ -124,6 +143,8 @@ class BleService {
   /// BLE 스캔 중지
   Future<void> stopScan() async {
     try {
+        await _scanSubscription?.cancel();
+        _scanSubscription = null;
 
       if (FlutterBluePlus.isScanningNow) {
         await FlutterBluePlus.stopScan();
@@ -162,7 +183,6 @@ class BleService {
       final bool isWindowsAutoConnect = Platform.isWindows ? false : autoConnect;
 
       await device.connect(
-        license: License.free,
         autoConnect: false, 
         mtu: null,
       );

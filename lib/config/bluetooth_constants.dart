@@ -46,7 +46,7 @@ class BluetoothConstants {
   static const int manualSyncTimeoutSeconds = 10;
 
   // 최대 패킷 크기 (바이트)
-  static const int maxPacketSizeBytes = 8;
+  static const int maxPacketSizeBytes = 9;
 
   // ========================================
   // Flags
@@ -79,11 +79,12 @@ class BluetoothConstants {
   static const int indexCmd = 2; // CMD 위치  
   
   static const int indexRunMode = 3; // Run 위치
+  static const int indexRunTime = 4;
   
-  static const int indexRunSpeed = 4; // Speed 위치
+  static const int indexRunSpeed = 5; // Speed 위치
   
-  static const int indexTurnAngleHigh = 5; // Turn Angle High 위치
-  static const int indexTurnAngleLow = 6; // Turn Angle Low 위치
+  static const int indexTurnAngleHigh = 6; // Turn Angle High 위치
+  static const int indexTurnAngleLow = 7; // Turn Angle Low 위치
 
   static const int indexChecksum = maxPacketSizeBytes - 1; // Checksum 위치
 }

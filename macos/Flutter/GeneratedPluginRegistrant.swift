@@ -5,7 +5,7 @@
 import FlutterMacOS
 import Foundation
 
-import flutter_blue_plus_darwin
+import flutter_blue_plus
 import screen_retriever_macos
 import window_manager
 

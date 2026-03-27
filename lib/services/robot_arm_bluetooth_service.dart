@@ -4,6 +4,7 @@ import 'dart:typed_data';
 
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
+import 'package:flutter_blue_plus_windows/flutter_blue_plus_windows.dart';
 import 'package:window_add_robot_arm_controller/config/bluetooth_constants.dart';
 import 'package:window_add_robot_arm_controller/core/bluetooth_service.dart';
 import 'package:window_add_robot_arm_controller/model/robot_arm_payload_data.dart';
@@ -32,6 +33,7 @@ StreamSubscription<BleConnectionStatus>? _connSub;
 
 
 BluetoothCharacteristic? _writeCharacteristic;
+
 
 RobotArmBluetoothService() {
   _bluetoothService = BleService();
@@ -144,55 +146,18 @@ Future<void> writeData(RobotArmPayloadData data) async {
   }
 }
 
-Future<List<BluetoothDevice>> scanForRobotArmDevices() async {
+Future<void> scanForRobotArmDevices() async {
 
-final foundDevices = <String, BluetoothDevice>{};
-final processedDevices = <String>{};
-
-debugPrint('Starting scan for Robot Arm devices...');
-
-StreamSubscription<List<ScanResult>>? subscription;
-
-final deviceNameKeywords = [BluetoothConstants.armDeviceName.toUpperCase()];
-final serviceUuids = [BluetoothConstants.robotArmAdvertisedUuid.toUpperCase()];
 
 try{
+
   await _bluetoothService.startScan(
-    serviceUuids: serviceUuids,
+    onDeviceFound: onDeviceFound
   );
-
-  subscription = FlutterBluePlus.scanResults.listen(
-    (results,){
- for (var result in results) {
-        
-        final device = result.device;
-        final deviceId = device.remoteId.str;
-        final deviceName = result.device.platformName.toUpperCase();
-        
-        if(processedDevices.contains(deviceId)){
-              continue; // 이미 처리한 기기면 건너뜀
-            }
-        processedDevices.add(deviceId);
-
-        if(deviceNameKeywords.contains(deviceName)){
-            
-          foundDevices[deviceId] = device;
-          debugPrint('Found Robot Arm device: $deviceName (${device.remoteId})');
-
-        }
-      }
-  });
-
-  await Future.delayed(const Duration(seconds: BluetoothConstants.scanTimeoutSeconds));
 
 }catch(e){
   debugPrint('Error during scanning: $e');
-} finally{
-  await subscription?.cancel();
-  await _bluetoothService.stopScan();
 }
-
-return foundDevices.values.toList();
 
 }
 
@@ -212,5 +177,12 @@ Future<void> disconnect() async {
   await _bluetoothService.disconnect();
   }
 
+void onDeviceFound(BluetoothDevice device) async {
+   debugPrint('============Robot Arm Device Servcie=====');
+   debugPrint('Device found: ${device.platformName} (${device.remoteId.str})');
+
+   await _bluetoothService.connect(device, autoConnect: false);
+
+}
 
 }

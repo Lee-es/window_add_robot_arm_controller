@@ -12,6 +12,7 @@ sealed class RobotArmPayloadData with _$RobotArmPayloadData {
   const factory RobotArmPayloadData({
     required RobotArmCommandId commandId,
     required RobotArmRunMode runMode,
+    required int runTime,
     required int runSpeed,
     required int turnAngle
   }) = _RobotArmPayloadData;
@@ -19,6 +20,7 @@ sealed class RobotArmPayloadData with _$RobotArmPayloadData {
   factory RobotArmPayloadData.initial() => const RobotArmPayloadData(
     commandId: RobotArmCommandId.idle,
     runMode: RobotArmRunMode.idle,
+    runTime: 1,
     runSpeed: 1,
     turnAngle: -180
   );

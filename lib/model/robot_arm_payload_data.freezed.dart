@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$RobotArmPayloadData {
 
- RobotArmCommandId get commandId; RobotArmRunMode get runMode; int get runSpeed; int get turnAngle;
+ RobotArmCommandId get commandId; RobotArmRunMode get runMode; int get runTime; int get runSpeed; int get turnAngle;
 /// Create a copy of RobotArmPayloadData
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $RobotArmPayloadDataCopyWith<RobotArmPayloadData> get copyWith => _$RobotArmPayl
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is RobotArmPayloadData&&(identical(other.commandId, commandId) || other.commandId == commandId)&&(identical(other.runMode, runMode) || other.runMode == runMode)&&(identical(other.runSpeed, runSpeed) || other.runSpeed == runSpeed)&&(identical(other.turnAngle, turnAngle) || other.turnAngle == turnAngle));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is RobotArmPayloadData&&(identical(other.commandId, commandId) || other.commandId == commandId)&&(identical(other.runMode, runMode) || other.runMode == runMode)&&(identical(other.runTime, runTime) || other.runTime == runTime)&&(identical(other.runSpeed, runSpeed) || other.runSpeed == runSpeed)&&(identical(other.turnAngle, turnAngle) || other.turnAngle == turnAngle));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,commandId,runMode,runSpeed,turnAngle);
+int get hashCode => Object.hash(runtimeType,commandId,runMode,runTime,runSpeed,turnAngle);
 
 @override
 String toString() {
-  return 'RobotArmPayloadData(commandId: $commandId, runMode: $runMode, runSpeed: $runSpeed, turnAngle: $turnAngle)';
+  return 'RobotArmPayloadData(commandId: $commandId, runMode: $runMode, runTime: $runTime, runSpeed: $runSpeed, turnAngle: $turnAngle)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $RobotArmPayloadDataCopyWith<$Res>  {
   factory $RobotArmPayloadDataCopyWith(RobotArmPayloadData value, $Res Function(RobotArmPayloadData) _then) = _$RobotArmPayloadDataCopyWithImpl;
 @useResult
 $Res call({
- RobotArmCommandId commandId, RobotArmRunMode runMode, int runSpeed, int turnAngle
+ RobotArmCommandId commandId, RobotArmRunMode runMode, int runTime, int runSpeed, int turnAngle
 });
 
 
@@ -62,11 +62,12 @@ class _$RobotArmPayloadDataCopyWithImpl<$Res>
 
 /// Create a copy of RobotArmPayloadData
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? commandId = null,Object? runMode = null,Object? runSpeed = null,Object? turnAngle = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? commandId = null,Object? runMode = null,Object? runTime = null,Object? runSpeed = null,Object? turnAngle = null,}) {
   return _then(_self.copyWith(
 commandId: null == commandId ? _self.commandId : commandId // ignore: cast_nullable_to_non_nullable
 as RobotArmCommandId,runMode: null == runMode ? _self.runMode : runMode // ignore: cast_nullable_to_non_nullable
-as RobotArmRunMode,runSpeed: null == runSpeed ? _self.runSpeed : runSpeed // ignore: cast_nullable_to_non_nullable
+as RobotArmRunMode,runTime: null == runTime ? _self.runTime : runTime // ignore: cast_nullable_to_non_nullable
+as int,runSpeed: null == runSpeed ? _self.runSpeed : runSpeed // ignore: cast_nullable_to_non_nullable
 as int,turnAngle: null == turnAngle ? _self.turnAngle : turnAngle // ignore: cast_nullable_to_non_nullable
 as int,
   ));
@@ -150,10 +151,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( RobotArmCommandId commandId,  RobotArmRunMode runMode,  int runSpeed,  int turnAngle)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( RobotArmCommandId commandId,  RobotArmRunMode runMode,  int runTime,  int runSpeed,  int turnAngle)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _RobotArmPayloadData() when $default != null:
-return $default(_that.commandId,_that.runMode,_that.runSpeed,_that.turnAngle);case _:
+return $default(_that.commandId,_that.runMode,_that.runTime,_that.runSpeed,_that.turnAngle);case _:
   return orElse();
 
 }
@@ -171,10 +172,10 @@ return $default(_that.commandId,_that.runMode,_that.runSpeed,_that.turnAngle);ca
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( RobotArmCommandId commandId,  RobotArmRunMode runMode,  int runSpeed,  int turnAngle)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( RobotArmCommandId commandId,  RobotArmRunMode runMode,  int runTime,  int runSpeed,  int turnAngle)  $default,) {final _that = this;
 switch (_that) {
 case _RobotArmPayloadData():
-return $default(_that.commandId,_that.runMode,_that.runSpeed,_that.turnAngle);}
+return $default(_that.commandId,_that.runMode,_that.runTime,_that.runSpeed,_that.turnAngle);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -188,10 +189,10 @@ return $default(_that.commandId,_that.runMode,_that.runSpeed,_that.turnAngle);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( RobotArmCommandId commandId,  RobotArmRunMode runMode,  int runSpeed,  int turnAngle)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( RobotArmCommandId commandId,  RobotArmRunMode runMode,  int runTime,  int runSpeed,  int turnAngle)?  $default,) {final _that = this;
 switch (_that) {
 case _RobotArmPayloadData() when $default != null:
-return $default(_that.commandId,_that.runMode,_that.runSpeed,_that.turnAngle);case _:
+return $default(_that.commandId,_that.runMode,_that.runTime,_that.runSpeed,_that.turnAngle);case _:
   return null;
 
 }
@@ -203,11 +204,12 @@ return $default(_that.commandId,_that.runMode,_that.runSpeed,_that.turnAngle);ca
 
 
 class _RobotArmPayloadData extends RobotArmPayloadData {
-  const _RobotArmPayloadData({required this.commandId, required this.runMode, required this.runSpeed, required this.turnAngle}): super._();
+  const _RobotArmPayloadData({required this.commandId, required this.runMode, required this.runTime, required this.runSpeed, required this.turnAngle}): super._();
   
 
 @override final  RobotArmCommandId commandId;
 @override final  RobotArmRunMode runMode;
+@override final  int runTime;
 @override final  int runSpeed;
 @override final  int turnAngle;
 
@@ -221,16 +223,16 @@ _$RobotArmPayloadDataCopyWith<_RobotArmPayloadData> get copyWith => __$RobotArmP
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _RobotArmPayloadData&&(identical(other.commandId, commandId) || other.commandId == commandId)&&(identical(other.runMode, runMode) || other.runMode == runMode)&&(identical(other.runSpeed, runSpeed) || other.runSpeed == runSpeed)&&(identical(other.turnAngle, turnAngle) || other.turnAngle == turnAngle));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _RobotArmPayloadData&&(identical(other.commandId, commandId) || other.commandId == commandId)&&(identical(other.runMode, runMode) || other.runMode == runMode)&&(identical(other.runTime, runTime) || other.runTime == runTime)&&(identical(other.runSpeed, runSpeed) || other.runSpeed == runSpeed)&&(identical(other.turnAngle, turnAngle) || other.turnAngle == turnAngle));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,commandId,runMode,runSpeed,turnAngle);
+int get hashCode => Object.hash(runtimeType,commandId,runMode,runTime,runSpeed,turnAngle);
 
 @override
 String toString() {
-  return 'RobotArmPayloadData(commandId: $commandId, runMode: $runMode, runSpeed: $runSpeed, turnAngle: $turnAngle)';
+  return 'RobotArmPayloadData(commandId: $commandId, runMode: $runMode, runTime: $runTime, runSpeed: $runSpeed, turnAngle: $turnAngle)';
 }
 
 
@@ -241,7 +243,7 @@ abstract mixin class _$RobotArmPayloadDataCopyWith<$Res> implements $RobotArmPay
   factory _$RobotArmPayloadDataCopyWith(_RobotArmPayloadData value, $Res Function(_RobotArmPayloadData) _then) = __$RobotArmPayloadDataCopyWithImpl;
 @override @useResult
 $Res call({
- RobotArmCommandId commandId, RobotArmRunMode runMode, int runSpeed, int turnAngle
+ RobotArmCommandId commandId, RobotArmRunMode runMode, int runTime, int runSpeed, int turnAngle
 });
 
 
@@ -258,11 +260,12 @@ class __$RobotArmPayloadDataCopyWithImpl<$Res>
 
 /// Create a copy of RobotArmPayloadData
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? commandId = null,Object? runMode = null,Object? runSpeed = null,Object? turnAngle = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? commandId = null,Object? runMode = null,Object? runTime = null,Object? runSpeed = null,Object? turnAngle = null,}) {
   return _then(_RobotArmPayloadData(
 commandId: null == commandId ? _self.commandId : commandId // ignore: cast_nullable_to_non_nullable
 as RobotArmCommandId,runMode: null == runMode ? _self.runMode : runMode // ignore: cast_nullable_to_non_nullable
-as RobotArmRunMode,runSpeed: null == runSpeed ? _self.runSpeed : runSpeed // ignore: cast_nullable_to_non_nullable
+as RobotArmRunMode,runTime: null == runTime ? _self.runTime : runTime // ignore: cast_nullable_to_non_nullable
+as int,runSpeed: null == runSpeed ? _self.runSpeed : runSpeed // ignore: cast_nullable_to_non_nullable
 as int,turnAngle: null == turnAngle ? _self.turnAngle : turnAngle // ignore: cast_nullable_to_non_nullable
 as int,
   ));

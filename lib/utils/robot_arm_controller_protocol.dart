@@ -46,6 +46,7 @@ class RobotArmControllerProtocol {
     packet[BluetoothConstants.indexStxSecond] = BluetoothConstants.stxSecond;
     packet[BluetoothConstants.indexCmd] = payloadData.commandId.code;
     packet[BluetoothConstants.indexRunMode] = payloadData.runMode.code;
+    packet[BluetoothConstants.indexRunTime] = payloadData.runTime;;
     packet[BluetoothConstants.indexRunSpeed] = payloadData.runSpeed;
 
     Uint8List angleBytes = TurnAngleConverter.angleToBytes(payloadData.turnAngle);

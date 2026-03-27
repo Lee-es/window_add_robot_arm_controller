@@ -38,8 +38,11 @@ dependencies:
   window_manager: ^0.5.1
   flutter_riverpod: ^3.3.1
   riverpod_annotation: ^4.0.2
-  flutter_blue_plus: ^2.2.1
-  flutter_blue_plus_windows: ^1.16.0
+  # 메인 패키지 (최신 버전 사용 권장)
+  flutter_blue_plus: ^1.31.0 
+  
+  # 윈도우 브릿지 패키지 (1.16.0에서 최신으로 업데이트)
+  flutter_blue_plus_windows: ^1.26.1
   freezed_annotation: ^3.1.0
   json_annotation: ^4.11.0
   gap: ^3.0.1
@@ -69,6 +72,9 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+
+  assets:
+    - assets/
 
   # To add assets to your application, add an assets section, like this:
   # assets:
