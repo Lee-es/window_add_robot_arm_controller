@@ -6,6 +6,7 @@
 /// - Blood Pressure Service UUID
 /// - Current Time Service UUID
 /// - 기타 BLE 관련 상수
+library;
 
 class BluetoothConstants {
   // Private constructor to prevent instantiation
@@ -17,8 +18,8 @@ class BluetoothConstants {
 
   static const String robotArmAdvertisedUuid = '95484DB8-8566-0B54-EA54-53B5EE31789E';
   static const String robotArmServiceUuid = '9b666c50-66c1-48aa-a2b7-552eec397c02';
-  static const String robotArmCharacteristicReadUuid = '3b252962-6eac-43f7-b7d9-9293c392d72e';
-  static const String robotArmCharacteristicWriteUuid = '958df18f-668f-480d-9660-37e37f67f5b4';
+  static const String robotArmCharacteristicReadUuid = '958df18f-668f-480d-9660-37e37f67f5b4';
+  static const String robotArmCharacteristicWriteUuid = '3b252962-6eac-43f7-b7d9-9293c392d72e';
 
   // ========================================
   // Connection & Timing

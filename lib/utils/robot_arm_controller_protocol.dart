@@ -39,14 +39,14 @@ class RobotArmControllerProtocol {
 
 
   /// 프로토콜 패킷 생성
-  static Uint8List createProtocolPacket({required final RobotArmPayloadData payloadData}) {
+  static List<int> createProtocolPacket({required final RobotArmPayloadData payloadData}) {
     Uint8List packet = Uint8List(BluetoothConstants.maxPacketSizeBytes);
     
     packet[BluetoothConstants.indexStxFirst] = BluetoothConstants.stxFirst;
     packet[BluetoothConstants.indexStxSecond] = BluetoothConstants.stxSecond;
     packet[BluetoothConstants.indexCmd] = payloadData.commandId.code;
     packet[BluetoothConstants.indexRunMode] = payloadData.runMode.code;
-    packet[BluetoothConstants.indexRunTime] = payloadData.runTime;;
+    packet[BluetoothConstants.indexRunTime] = payloadData.runTime;
     packet[BluetoothConstants.indexRunSpeed] = payloadData.runSpeed;
 
     Uint8List angleBytes = TurnAngleConverter.angleToBytes(payloadData.turnAngle);

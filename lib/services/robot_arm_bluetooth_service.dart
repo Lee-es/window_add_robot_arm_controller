@@ -134,6 +134,7 @@ Future<void> writeData(RobotArmPayloadData data) async {
     debugPrint('Data written to Robot Arm: $data');    
 
     final packetData = RobotArmControllerProtocol.createProtocolPacket(payloadData: data);
+    debugPrint('Data written to Robot Arm PacketData: $packetData');    
 
     await _bluetoothService.writeCharacteristic(
         _writeCharacteristic!,

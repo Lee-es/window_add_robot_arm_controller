@@ -1,6 +1,5 @@
 
 import 'package:fluent_ui/fluent_ui.dart';
-import 'package:flutter_blue_plus_windows/flutter_blue_plus_windows.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:window_add_robot_arm_controller/core/theme/app_theme.dart';
 import 'package:window_add_robot_arm_controller/features/widget/bottom_center_section.dart';
