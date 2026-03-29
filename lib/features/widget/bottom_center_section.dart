@@ -2,6 +2,7 @@ import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:window_add_robot_arm_controller/core/theme/app_theme.dart';
 import 'package:window_add_robot_arm_controller/model/robot_arm_payload_data.dart';
+import 'package:window_add_robot_arm_controller/providers/robot_arm_controller_notifier.dart';
 import 'package:window_add_robot_arm_controller/utils/robot_arm_controller_protocol.dart';
 
 import '../../providers/robot_arm_service_provider.dart';
@@ -12,6 +13,18 @@ class BottomCenterSection extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final armControllerNotifier = ref.read(robotArmControllerProvider.notifier);
+    final bleState = ref.watch(robotArmControllerProvider);
+    final runMode = bleState.currentRunMode;
+    final receivedData = bleState.currentReceivedData;
+
+    final String assetWalking = runMode == RobotArmRunMode.walking
+        ? 'assets/rac_bt_walking_on.png'
+        : 'assets/rac_bt_walking_off.png';
+    final String assetRunning = runMode == RobotArmRunMode.running
+        ? 'assets/rac_bt_running_on.png'
+        : 'assets/rac_bt_running_off.png';
+
     return Column(
       children: [
         const SizedBox(height: 30,),
@@ -22,8 +35,10 @@ class BottomCenterSection extends ConsumerWidget {
               width: 150,
               height: 80,
               child: GestureDetector(
-                onTap: (){},
-                child: Image.asset('assets/rac_bt_walking_on.png',fit: BoxFit.contain),
+                onTap: () async{
+                  await armControllerNotifier.changRunMode(RobotArmRunMode.walking);
+                },
+                child: Image.asset(assetWalking,fit: BoxFit.contain),
                           ),
                         ),
             const SizedBox(width: 30,),
@@ -31,10 +46,11 @@ class BottomCenterSection extends ConsumerWidget {
               width: 150,
               height: 80,
               child: GestureDetector(
-                          onTap: (){
+                          onTap: ()async{
+                            await armControllerNotifier.changRunMode(RobotArmRunMode.running);
                           },
-                          child: Image.asset('assets/rac_bt_running_on.png',
-                              fit: BoxFit.contain),
+                          child: Image.asset(assetRunning,
+                            fit: BoxFit.contain),
                           ),
                         )
                       ]),
@@ -71,7 +87,16 @@ class BottomCenterSection extends ConsumerWidget {
               SizedBox(
                 width: 200, height: 130,
                 child: GestureDetector(
-                  onTap: (){},
+                  onTap: () async{
+                    debugPrint('[긴급 정지] COMMAND 데이터전송');
+                     final service =   ref.read(robotArmControllerProvider.notifier);
+                     try{
+                      await service.writeToRobotArm(RobotArmCommandId.emergencyStop);
+                     }catch(e){
+                      debugPrint(e.toString());
+                     }
+
+                  },
                   child: Image.asset('assets/rac_bt_stop.png',fit: BoxFit.contain,))
               ),
               const SizedBox(width: 20),
@@ -80,11 +105,10 @@ class BottomCenterSection extends ConsumerWidget {
                 child: GestureDetector(
                   onTap: () async {
             
-                    debugPrint('데이터전송');
-                     final service =   ref.read(robotArmServiceProvider);
+                    debugPrint('[동작 시작] COMMAND 데이터전송');
+                     final service =   ref.read(robotArmControllerProvider.notifier);
                      try{
-                      final payload = RobotArmPayloadData(commandId: RobotArmCommandId.start, runMode: RobotArmRunMode.running, runTime: 10, runSpeed: 10, turnAngle: 100);
-                      await service.writeData(payload);
+                      await service.writeToRobotArm(RobotArmCommandId.start);
                      }catch(e){
                       debugPrint(e.toString());
                      }
@@ -95,6 +119,8 @@ class BottomCenterSection extends ConsumerWidget {
               ),
             ],
           ),
+          const SizedBox(height:10),
+          Text('Received Data: $receivedData',style: AppTextStyles.title,),
           const SizedBox(height: 50,)
  
           ]);

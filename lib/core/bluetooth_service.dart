@@ -127,7 +127,7 @@ class BleService {
             if( deviceName.contains(targetDeviceName)){
               debugPrint('Device found: $deviceName (${device.remoteId.str})');
               onDeviceFound.call(device);
-              stopScan();
+            
             }
           }
         }
@@ -272,10 +272,12 @@ class BleService {
     void Function(List<int> data) onData,
   ) async {
     try {
-      await characteristic.setNotifyValue(true);
-      debugPrint('Subscribed to characteristic: ${characteristic.uuid}');
+      debugPrint('Subscribed to  Noti characteristic: ${characteristic.uuid}');
+      await characteristic.setNotifyValue(true,forceIndications: false);
+      
 
       return characteristic.lastValueStream.listen((value) {
+         debugPrint('Data received Data: $value');
         if (value.isNotEmpty) {
           onData(value);
         }

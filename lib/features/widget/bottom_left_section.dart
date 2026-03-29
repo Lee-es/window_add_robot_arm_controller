@@ -1,6 +1,8 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:window_add_robot_arm_controller/core/theme/app_theme.dart';
+import 'package:window_add_robot_arm_controller/providers/robot_arm_controller_notifier.dart';
+import 'package:window_add_robot_arm_controller/utils/robot_arm_controller_protocol.dart';
 
 class BottomLeftSection extends ConsumerWidget {
   
@@ -61,7 +63,14 @@ class BottomLeftSection extends ConsumerWidget {
                       flex: 1,
                       child: SizedBox(
                         child:GestureDetector(
-                          onTap: (){
+                          onTap: () async{
+                            debugPrint('[의복 착의 시작] COMMAND 데이터전송');
+                     final service =   ref.read(robotArmControllerProvider.notifier);
+                     try{
+                      await service.writeToRobotArm(RobotArmCommandId.clothed);
+                     }catch(e){
+                      debugPrint(e.toString());
+                     }
                           },
                           child:Padding(
                             padding: const EdgeInsets.all(5),
@@ -75,7 +84,14 @@ class BottomLeftSection extends ConsumerWidget {
                       flex: 1,
                       child:  SizedBox( 
                        child:GestureDetector(
-                        onTap: (){
+                        onTap: () async{
+                           debugPrint('[의복 착의 시작] COMMAND 데이터전송');
+                     final service =   ref.read(robotArmControllerProvider.notifier);
+                     try{
+                      await service.writeToRobotArm(RobotArmCommandId.reset);
+                     }catch(e){
+                      debugPrint(e.toString());
+                     }
                         },
                         child:Padding(
                           padding: const EdgeInsets.all(5),

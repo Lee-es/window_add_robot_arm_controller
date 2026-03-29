@@ -7,6 +7,7 @@ import 'package:window_add_robot_arm_controller/features/widget/bottom_left_sect
 import 'package:window_add_robot_arm_controller/features/widget/bottom_right_section.dart';
 import 'package:window_add_robot_arm_controller/features/widget/description_section.dart';
 import 'package:window_add_robot_arm_controller/features/widget/top_section.dart';
+import 'package:window_add_robot_arm_controller/providers/robot_arm_controller_notifier.dart';
 import 'package:window_add_robot_arm_controller/providers/robot_arm_service_provider.dart';
 
 class MainScreen extends ConsumerStatefulWidget {
@@ -83,15 +84,11 @@ class _MainScreenState extends ConsumerState<MainScreen> {
   } 
 
   Future<void> _initializeBluetooth() async {
-    // Bluetooth 초기화 로직을 여기에 작성합니다.
-    // 예: BluetoothService 초기화, 권한 요청 등
-
-    final service = ref.read(robotArmServiceProvider);
+  
+    final service = ref.read(robotArmControllerProvider.notifier);
                   
     debugPrint('테스트: 스캔 시작... (최대 15초 소요)');
-                  // 1. 기기 스캔
-    await service.scanForRobotArmDevices();
-                  
+    await service.startArmControl();
   }
 }
 

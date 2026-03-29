@@ -14,13 +14,13 @@ class RobotArmBluetoothService {
 
 
 late final BleService _bluetoothService;
-final StreamController<Uint8List> _robotArmDataController = 
-StreamController<Uint8List>.broadcast();
+final StreamController<List<int>> _robotArmDataController = 
+StreamController<List<int>>.broadcast();
 
 StreamSubscription<List<int>>? _robotArmDataSubscription;
 
 /// 로봇 팔 데이터 스트림
-Stream<Uint8List> get robotArmDataStream => _robotArmDataController.stream;
+Stream<List<int>> get robotArmDataStream => _robotArmDataController.stream;
 
 Stream<BleConnectionStatus> get connectionStatusStream =>
 _bluetoothService.connectionStatusStream;
@@ -47,6 +47,7 @@ RobotArmBluetoothService() {
       debugPrint('======disconnected from robot arm controller======');
       await _robotArmDataSubscription?.cancel();
       _robotArmDataSubscription = null;
+       _writeCharacteristic = null;
     }
 
    }); 
@@ -68,12 +69,13 @@ Future<void> _setupRobotArmService() async{
     }
 
     if(robotArmService != null){
-      await _subscribeToRobotArmData(robotArmService);
       debugPrint('Robot Arm Service found');
+      await Future.delayed(const Duration(milliseconds: 500));
       _writeCharacteristic = _bluetoothService.findCharacteristic(
           robotArmService,
           BluetoothConstants.robotArmCharacteristicWriteUuid
         );
+        await _subscribeToRobotArmData(robotArmService);
 
     }else{
       debugPrint('Warning: Service UUID Not Found');
@@ -90,7 +92,7 @@ Future<void> _subscribeToRobotArmData(BluetoothService service) async {
    
    final charcteristic = _bluetoothService.findCharacteristic(
     service,
-    BluetoothConstants.robotArmCharacteristicReadUuid
+    BluetoothConstants.robotArmCharacteristicWriteUuid
    );
 
   if(charcteristic == null){
@@ -100,7 +102,6 @@ Future<void> _subscribeToRobotArmData(BluetoothService service) async {
 
   await _robotArmDataSubscription?.cancel();
   _robotArmDataSubscription = null;
-
   _robotArmDataSubscription = await _bluetoothService.subscribeToCharacteristic(
   charcteristic,
   _handleReceivedData,
@@ -117,7 +118,7 @@ Future<void> _subscribeToRobotArmData(BluetoothService service) async {
 void _handleReceivedData(List<int> data) {
   try{
   debugPrint('Received data from Robot Arm: $data');
-  _robotArmDataController.add(Uint8List.fromList(data));
+  _robotArmDataController.add(data);
   }catch(e){
     debugPrint('Error handling received data: $e');
   }
@@ -182,6 +183,7 @@ void onDeviceFound(BluetoothDevice device) async {
    debugPrint('============Robot Arm Device Servcie=====');
    debugPrint('Device found: ${device.platformName} (${device.remoteId.str})');
 
+   await _bluetoothService.stopScan();
    await _bluetoothService.connect(device, autoConnect: false);
 
 }
