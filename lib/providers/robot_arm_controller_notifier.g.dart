@@ -43,7 +43,7 @@ final class RobotArmControllerNotifierProvider
 }
 
 String _$robotArmControllerNotifierHash() =>
-    r'daae70088dcf77f16069d6bd78611248c7c5b905';
+    r'a3b44f081183b97a127b62968b2ddfda79804d26';
 
 abstract class _$RobotArmControllerNotifier
     extends $Notifier<RobotArmControllerState> {

@@ -1,6 +1,5 @@
 import 'package:fluent_ui/fluent_ui.dart';
 
-
 class AppTextStyles {
   AppTextStyles._();
 
@@ -22,7 +21,7 @@ class AppTextStyles {
     color: Color(0xFF8C8C8C),
   );
 
-   static const TextStyle armController = TextStyle(
+  static const TextStyle armController = TextStyle(
     fontSize: 30,
     fontWeight: FontWeight.w600,
     color: Colors.white,

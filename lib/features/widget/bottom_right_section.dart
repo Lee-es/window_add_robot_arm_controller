@@ -19,7 +19,9 @@ class _BottomRightSectionState extends ConsumerState<BottomRightSection> {
   void initState() {
     super.initState();
     final state = ref.read(robotArmControllerProvider);
-    _angleController = TextEditingController(text: state.currentTurnAngle.toString());
+    _angleController = TextEditingController(
+      text: state.currentTurnAngle.toString(),
+    );
     _angleFocus = FocusNode()..addListener(_onAngleFocusChange);
   }
 
@@ -34,9 +36,9 @@ class _BottomRightSectionState extends ConsumerState<BottomRightSection> {
   void _onAngleFocusChange() {
     if (!_angleFocus.hasFocus) {
       int? val = int.tryParse(_angleController.text);
-      if (val == null || val < -180) val = -180; // 비정상이거나 -180 미만이면 제일 min 값(-180)으로
+      val ??= 0; // 비정상 입력 시 0으로 초기화
+      if (val < -180) val = -180; // 비정상이거나 -180 미만이면 제일 min 값(-180)으로
       if (val > 180) val = 180; // 180 초과 시 180으로 고정
-      
       _angleController.text = val.toString();
       ref.read(robotArmControllerProvider.notifier).changeTurnAngle(val);
     }
@@ -44,29 +46,33 @@ class _BottomRightSectionState extends ConsumerState<BottomRightSection> {
 
   @override
   Widget build(BuildContext context) {
+    final armControllerNotifier = ref.read(robotArmControllerProvider.notifier);
+    final bleState = ref.watch(robotArmControllerProvider);
+    final isRunning = bleState.isRobotArmRunning;
+
+    final String assetSetting = isRunning
+        ? 'assets/rac_bt_setting_off.png' // 실행 중에는 설정 버튼 비활성화 이미지
+        : 'assets/rac_bt_setting_on.png'; // 실행 중이 아닐 때는 활성화 이미지
+
     // 외부 상태 업데이트 시 텍스트 동기화
     ref.listen(robotArmControllerProvider, (prev, next) {
-      if (prev?.currentTurnAngle != next.currentTurnAngle && !_angleFocus.hasFocus) {
+      if (prev?.currentTurnAngle != next.currentTurnAngle &&
+          !_angleFocus.hasFocus) {
         _angleController.text = next.currentTurnAngle.toString();
       }
     });
 
     return Column(
       children: [
-        const SizedBox(height: 10,),
-        Expanded(
-          flex: 2,
-          child: Text('턴테이블', style: AppTextStyles.title)
-        ),
+        const SizedBox(height: 10),
+        Expanded(flex: 2, child: Text('턴테이블', style: AppTextStyles.title)),
         Expanded(
           flex: 5,
-          child: SizedBox(
-            child: Image.asset('assets/robot_3.png'),
-          ),
+          child: SizedBox(child: Image.asset('assets/robot_3.png')),
         ),
-        const SizedBox(height: 10,),
+        const SizedBox(height: 10),
         Expanded(
-          flex: 3, 
+          flex: 3,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -74,43 +80,46 @@ class _BottomRightSectionState extends ConsumerState<BottomRightSection> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(
-                    width: 100, 
+                    width: 100,
                     child: TextBox(
                       controller: _angleController, // 💡 컨트롤러 연결
-                      focusNode: _angleFocus,       // 💡 포커스 연결
-                      textAlign: TextAlign.center, 
+                      focusNode: _angleFocus, // 💡 포커스 연결
+                      textAlign: TextAlign.center,
                       style: const TextStyle(fontSize: 20),
                       onSubmitted: (_) => _angleFocus.unfocus(),
-                    )
+                      enabled: !isRunning, // 실행 중에는 입력 비활성화
+                    ),
                   ),
                   const SizedBox(width: 8),
                   const Text('deg', style: TextStyle(fontSize: 20)),
                 ],
               ),
-              const SizedBox(height: 15,),
+              const SizedBox(height: 15),
               SizedBox(
                 width: 150,
                 height: 60,
                 child: GestureDetector(
                   onTap: () async {
                     // 전송 전 입력 중인 포커스 해제 (상태 업데이트 반영)
-                    FocusManager.instance.primaryFocus?.unfocus(); 
+                    FocusManager.instance.primaryFocus?.unfocus();
 
                     debugPrint('[턴테이블] COMMAND 데이터전송');
-                    final service = ref.read(robotArmControllerProvider.notifier);
+                    if (isRunning) return; // 실행 중에는 명령 전송 불가
                     try {
-                      await service.writeToRobotArm(RobotArmCommandId.turnTable);
-                    } catch(e) {
+                      await armControllerNotifier.writeToRobotArm(
+                        RobotArmCommandId.turnTable,
+                      );
+                    } catch (e) {
                       debugPrint(e.toString());
                     }
                   },
-                  child: Image.asset('assets/rac_bt_setting_on.png'),
+                  child: Image.asset(assetSetting, fit: BoxFit.contain),
                 ),
-              )
+              ),
             ],
-          )
+          ),
         ),
-        const SizedBox(height: 5,)
+        const SizedBox(height: 5),
       ],
     );
   }
